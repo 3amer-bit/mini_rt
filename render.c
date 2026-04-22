@@ -20,20 +20,57 @@ static double	intersect(t_ray *ray, t_sphere *sphere)
 	return ((-b - sqrt(discriminant)) / (2 * a));
 }
 
-static unsigned int	trace_ray(t_coord *coord)
+static t_color	background(t_ray ray)
+{
+	t_vec3	unit_direction;
+	double	a;
+
+	unit_direction = normalize(ray.direction);
+	a = 0.5 * (unit_direction.y + 1.0);
+	return ((t_color){
+		1,
+		(1.0 - a) * 1.0 + a * 0.5,
+		(1.0 - a) * 1.0 + a * 0.7,
+		(1.0 - a) * 1.0 + a * 1.0,
+	});
+}
+
+double	light_intensity(t_vec3 intersection, t_sphere sphere)
+{
+	t_point3	light;
+	t_vec3		normal;
+	t_vec3		light_dir;
+
+	light = (t_point3){-1, -1, -1};
+	normal = normalize(sub(intersection, sphere.origin));
+	light_dir = normalize(scale(-1, light));
+	return (fmax(dot(normal, normalize(light_dir)), 0.0));
+}
+
+static t_color	trace_ray(t_coord *coord)
 {
 	t_ray		ray;
 	t_sphere	sphere;
-	double		intersection;
+	double		t;
+	t_vec3		intersection;
+	double		intensity;
 
-	ray.origin = (t_point3){0, 0, -2};
-	ray.direction = (t_vec3){(coord->x), (coord->y), 1};
+	ray.origin = (t_point3){0, 0, 1.1};
+	ray.direction = (t_vec3){(coord->x), (coord->y), -1};
 	sphere.origin = (t_point3){0, 0, 0};
 	sphere.radius = 0.5;
-	intersection = intersect(&ray, &sphere);
-	if (intersection < 0)
-		return (create_trgb(255, 0, 0, 0));
-	return (create_trgb(255, 0, 50, 150));
+	sphere.color = (t_color){1, 1, 0, 0};
+	t = intersect(&ray, &sphere);
+	if (t < 0)
+		return (background(ray));
+	intersection = add(ray.origin, scale(t, ray.direction));
+	intensity = light_intensity(intersection, sphere);
+	return ((t_color){
+		1,
+		sphere.color.r * intensity,
+		sphere.color.g * intensity,
+		sphere.color.b * intensity,
+	});
 }
 
 void	render(t_framebuf *framebuf)
