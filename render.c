@@ -44,7 +44,7 @@ double	light_intensity(t_vec3 intersection, t_sphere sphere)
 	light = (t_point3){-1, -1, -1};
 	normal = normalize(sub(intersection, sphere.origin));
 	light_dir = normalize(scale(-1, light));
-	return (fmax(dot(normal, normalize(light_dir)), 0.0));
+	return (fmax(dot(normal, light_dir), 0.0));
 }
 
 static t_color	trace_ray(t_coord *coord)
