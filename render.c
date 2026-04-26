@@ -4,11 +4,11 @@
 
 static double	intersect(t_ray *ray, t_sphere *sphere)
 {
-	double		discriminant;
-	double		a;
-	double		b;
-	double		c;
-	t_vec3		oc;
+	double	discriminant;
+	double	a;
+	double	b;
+	double	c;
+	t_vec3	oc;
 
 	oc = sub(ray->origin, sphere->origin);
 	a = dot(ray->direction, ray->direction);
@@ -37,11 +37,11 @@ static t_color	background(t_ray ray)
 
 double	light_intensity(t_vec3 intersection, t_sphere sphere)
 {
-	t_point3	light;
-	t_vec3		normal;
-	t_vec3		light_dir;
+	t_vec3	light;
+	t_vec3	normal;
+	t_vec3	light_dir;
 
-	light = (t_point3){-1, -1, -1};
+	light = (t_vec3){-1, -1, -1};
 	normal = normalize(sub(intersection, sphere.origin));
 	light_dir = normalize(scale(-1, light));
 	return (fmax(dot(normal, light_dir), 0.0));
