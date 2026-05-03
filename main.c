@@ -2,6 +2,7 @@
 #include <X11/Xlib.h>
 #include <stdlib.h>
 #include "./minilibx-linux/mlx.h"
+#include "scene.h"
 #include "minirt.h"
 
 static int	setup_img(t_window *win_ctx)
@@ -32,6 +33,8 @@ static int	setup_hooks(t_window *window)
 		handle_destroy_structure_notify,
 		window
 		);
+	// mlx_mouse_hook(win_ctx->win_ptr, handle_mouse, window);
+	// mlx_loop_hook(win_ctx->mlx_ptr, loop_hook, window);
 	return (1);
 }
 
@@ -41,6 +44,8 @@ static int	init_window(t_window *win)
 	if (!win->mlx_ptr)
 		return (0);
 	mlx_get_screen_size(win->mlx_ptr, &win->width, &win->height);
+	win->width = 1280;
+	win->height = 720;
 	win->win_ptr = mlx_new_window(
 			win->mlx_ptr, win->width, win->height, "Mini RT");
 	if (!win->win_ptr)
@@ -65,7 +70,7 @@ int	main(void)
 	if (!init_window(&win_ctx))
 		return (EXIT_FAILURE);
 	setup_hooks(&win_ctx);
-	render(&framebuf);
+	render(&framebuf, init_scene());
 	mlx_put_image_to_window(
 		win_ctx.mlx_ptr, win_ctx.win_ptr, win_ctx.framebuf->img_ptr, 0, 0);
 	mlx_loop(win_ctx.mlx_ptr);
