@@ -2,6 +2,7 @@
 # define MINIRT_H
 
 # define EPSILON 1e-6
+# define PI 3.1415926535897932385
 
 typedef struct s_framebuffer
 {
@@ -14,13 +15,6 @@ typedef struct s_framebuffer
 	int		height;
 }	t_framebuf;
 
-typedef struct s_vec3
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_vec3;
-
 typedef struct s_color
 {
 	double	t;
@@ -28,8 +22,6 @@ typedef struct s_color
 	double	g;
 	double	b;
 }	t_color;
-
-typedef struct s_vec3	t_point3;
 
 typedef struct s_pixel
 {
@@ -44,19 +36,6 @@ typedef struct s_coord
 	double	y;
 }	t_coord;
 
-typedef struct s_ray
-{
-	t_point3	origin;
-	t_vec3		direction;
-}	t_ray;
-
-typedef struct s_sphere
-{
-	t_point3	origin;
-	double		radius;
-	t_color		color;
-}	t_sphere;
-
 typedef struct s_window
 {
 	void		*mlx_ptr;
@@ -70,6 +49,6 @@ int		handle_keypress(int keysym, t_window *data);
 int		handle_destroy_structure_notify(t_window *data);
 void	mlx_destroy(t_window *win_ctx);
 void	ft_mlx_put_pixel(t_framebuf *framebuf, t_pixel *pixel);
-void	render(t_framebuf *framebuf);
+double	degrees_to_radians(double degrees);
 
 #endif
