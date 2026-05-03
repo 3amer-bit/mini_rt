@@ -1,32 +1,14 @@
 #include <math.h>
+#include <stddef.h>
 #include "vector.h"
+#include "scene.h"
 #include "minirt.h"
-
-static double	intersect(t_ray *ray, t_sphere *sphere)
-{
-	double	discriminant;
-	double	a;
-	double	b;
-	double	c;
-	t_vec3	oc;
-
-	oc = sub(ray->origin, sphere->origin);
-	a = dot(ray->direction, ray->direction);
-	b = 2 * dot(oc, ray->direction);
-	c = dot(oc, oc) - sphere->radius * sphere->radius;
-	discriminant = b * b - 4 * a * c;
-	if (discriminant < 0)
-		return (-1);
-	return ((-b - sqrt(discriminant)) / (2 * a));
-}
 
 static t_color	background(t_ray ray)
 {
-	t_vec3	unit_direction;
 	double	a;
 
-	unit_direction = normalize(ray.direction);
-	a = 0.5 * (unit_direction.y + 1.0);
+	a = 0.5 * (ray.direction.y + 1.0);
 	return ((t_color){
 		1,
 		(1.0 - a) * 1.0 + a * 0.5,
@@ -35,67 +17,81 @@ static t_color	background(t_ray ray)
 	});
 }
 
-double	light_intensity(t_vec3 intersection, t_sphere sphere)
+static double	light_intensity(t_hit hit, t_scene scene)
 {
-	t_vec3	light;
-	t_vec3	normal;
 	t_vec3	light_dir;
 
-	light = (t_vec3){-1, -1, -1};
-	normal = normalize(sub(intersection, sphere.origin));
-	light_dir = normalize(scale(-1, light));
-	return (fmax(dot(normal, light_dir), 0.0));
+	light_dir = normalize(scale(scene.light.direction, -1));
+	return (fmax(dot(hit.normal, light_dir), 0.0) * scene.light.brightness);
 }
 
-static t_color	trace_ray(t_coord *coord)
+t_ray	get_prime_ray(t_camera cam, t_coord viewport)
 {
-	t_ray		ray;
-	t_sphere	sphere;
-	double		t;
-	t_vec3		intersection;
-	double		intensity;
+	t_ray	ray;
 
-	ray.origin = (t_point3){0, 0, 1.1};
-	ray.direction = (t_vec3){(coord->x), (coord->y), -1};
-	sphere.origin = (t_point3){0, 0, 0};
-	sphere.radius = 0.5;
-	sphere.color = (t_color){1, 1, 0, 0};
-	t = intersect(&ray, &sphere);
-	if (t < 0)
-		return (background(ray));
-	intersection = add(ray.origin, scale(t, ray.direction));
-	intensity = light_intensity(intersection, sphere);
+	ray.origin = cam.origin;
+	ray.direction = (t_vec3){
+		viewport.x * cam.scale,
+		viewport.y * cam.scale,
+		-1};
+	return (ray);
+}
+
+static t_hit	trace_ray(t_ray ray, t_scene scene)
+{
+	t_hit	closest_hit;
+	t_hit	hit;
+	int		i;
+
+	closest_hit = (t_hit){0};
+	closest_hit.t = -1.0;
+	i = 0;
+	while (i < scene.obj_count)
+	{
+		hit = intersect_sphere(&ray, &scene.objects[i]);
+		if (hit.t > 0 && (closest_hit.t < 0 || hit.t < closest_hit.t))
+			closest_hit = hit;
+		i++;
+	}
+	return (closest_hit);
+}
+
+t_color	ray_gen(t_ray prime, t_scene scene)
+{
+	double	brightness;
+	t_hit	hit;
+
+	hit = trace_ray(prime, scene);
+	if (hit.t < 0)
+		return (background(prime));
+	brightness = light_intensity(hit, scene);
 	return ((t_color){
-		1,
-		sphere.color.r * intensity,
-		sphere.color.g * intensity,
-		sphere.color.b * intensity,
+		1.0,
+		hit.mat->albedo.r * brightness,
+		hit.mat->albedo.g * brightness,
+		hit.mat->albedo.b * brightness,
 	});
 }
 
-void	render(t_framebuf *framebuf)
+void	render(t_framebuf *framebuf, t_scene scene)
 {
-	int		i;
-	int		j;
 	t_pixel	pixel;
-	t_coord	coord;
-	double	aspect_ratio;
+	t_coord	viewport;
+	double	aspect;
 
-	j = 0;
-	aspect_ratio = (double) framebuf->width / framebuf->height;
-	while (j < framebuf->height)
+	pixel.y = 0;
+	aspect = (double) framebuf->width / framebuf->height;
+	while (pixel.y < framebuf->height)
 	{
-		i = 0;
-		while (i < framebuf->width)
+		pixel.x = 0;
+		while (pixel.x < framebuf->width)
 		{
-			pixel.x = i;
-			pixel.y = j;
-			coord.x = (((double) i / framebuf->width) * 2 - 1) * aspect_ratio;
-			coord.y = 1 - ((double) j / framebuf->height) * 2;
-			pixel.color = trace_ray(&coord);
+			viewport.y = 1 - 2 * ((double) pixel.y / framebuf->height);
+			viewport.x = (2 * ((double) pixel.x / framebuf->width) - 1) * aspect;
+			pixel.color = ray_gen(get_prime_ray(scene.camera, viewport), scene);
 			ft_mlx_put_pixel(framebuf, &pixel);
-			i++;
+			pixel.x++;
 		}
-		j++;
+		pixel.y++;
 	}
 }
