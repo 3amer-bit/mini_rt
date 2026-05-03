@@ -25,7 +25,7 @@ static double	light_intensity(t_hit hit, t_scene scene)
 	return (fmax(dot(hit.normal, light_dir), 0.0) * scene.light.brightness);
 }
 
-t_ray	get_prime_ray(t_camera cam, t_coord viewport)
+t_ray	get_ray(t_camera cam, t_coord viewport)
 {
 	t_ray	ray;
 
@@ -56,14 +56,14 @@ static t_hit	trace_ray(t_ray ray, t_scene scene)
 	return (closest_hit);
 }
 
-t_color	ray_gen(t_ray prime, t_scene scene)
+t_color	ray_gen(t_ray ray, t_scene scene)
 {
 	double	brightness;
 	t_hit	hit;
 
-	hit = trace_ray(prime, scene);
+	hit = trace_ray(ray, scene);
 	if (hit.t < 0)
-		return (background(prime));
+		return (background(ray));
 	brightness = light_intensity(hit, scene);
 	return ((t_color){
 		1.0,
@@ -88,7 +88,7 @@ void	render(t_framebuf *framebuf, t_scene scene)
 		{
 			viewport.y = 1 - 2 * ((double) pixel.y / framebuf->height);
 			viewport.x = (2 * ((double) pixel.x / framebuf->width) - 1) * aspect;
-			pixel.color = ray_gen(get_prime_ray(scene.camera, viewport), scene);
+			pixel.color = ray_gen(get_ray(scene.camera, viewport), scene);
 			ft_mlx_put_pixel(framebuf, &pixel);
 			pixel.x++;
 		}
