@@ -2,7 +2,6 @@
 #include <X11/Xlib.h>
 #include <stdlib.h>
 #include "./minilibx-linux/mlx.h"
-#include "scene.h"
 #include "minirt.h"
 
 static int	setup_img(t_window *win_ctx)
@@ -34,7 +33,7 @@ static int	setup_hooks(t_window *window)
 		window
 		);
 	// mlx_mouse_hook(win_ctx->win_ptr, handle_mouse, window);
-	// mlx_loop_hook(win_ctx->mlx_ptr, loop_hook, window);
+	mlx_loop_hook(window->mlx_ptr, loop_hook, window);
 	return (1);
 }
 
@@ -58,6 +57,8 @@ static int	init_window(t_window *win)
 		mlx_destroy(win);
 		return (0);
 	}
+	win->redraw = 0;
+	win->scene = init_scene();
 	return (1);
 }
 
@@ -70,7 +71,7 @@ int	main(void)
 	if (!init_window(&win_ctx))
 		return (EXIT_FAILURE);
 	setup_hooks(&win_ctx);
-	render(&framebuf, init_scene());
+	render(&framebuf, win_ctx.scene);
 	mlx_put_image_to_window(
 		win_ctx.mlx_ptr, win_ctx.win_ptr, win_ctx.framebuf->img_ptr, 0, 0);
 	mlx_loop(win_ctx.mlx_ptr);

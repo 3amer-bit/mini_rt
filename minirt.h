@@ -1,6 +1,8 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
+# include "scene.h"
+
 # define EPSILON 1e-6
 # define PI 3.1415926535897932385
 
@@ -14,14 +16,6 @@ typedef struct s_framebuffer
 	int		width;
 	int		height;
 }	t_framebuf;
-
-typedef struct s_color
-{
-	double	t;
-	double	r;
-	double	g;
-	double	b;
-}	t_color;
 
 typedef struct s_pixel
 {
@@ -41,14 +35,18 @@ typedef struct s_window
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_framebuf	*framebuf;
+	t_scene		scene;
 	int			width;
 	int			height;
+	int			redraw;
 }	t_window;
 
 int		handle_keypress(int keysym, t_window *data);
 int		handle_destroy_structure_notify(t_window *data);
+int		loop_hook(t_window *data);
 void	mlx_destroy(t_window *win_ctx);
 void	ft_mlx_put_pixel(t_framebuf *framebuf, t_pixel *pixel);
 double	degrees_to_radians(double degrees);
+void	render(t_framebuf *framebuf, t_scene scene);
 
 #endif

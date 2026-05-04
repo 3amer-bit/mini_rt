@@ -16,10 +16,10 @@ static int	create_trgb(t_color c)
 	unsigned int	blue;
 	unsigned int	tr;
 
-	red = 255.999 * clamp(c.r, 0.0, 1);
-	green = 255.999 * clamp(c.g, 0.0, 1);
-	blue = 255.999 * clamp(c.b, 0.0, 1);
-	tr = 255.999 * clamp(c.t, 0.0, 1);
+	red = 255.999 * clamp(c.x, 0.0, 1);
+	green = 255.999 * clamp(c.y, 0.0, 1);
+	blue = 255.999 * clamp(c.z, 0.0, 1);
+	tr = 0;
 	return (tr << 24 | red << 16 | green << 8 | blue);
 }
 

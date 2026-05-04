@@ -1,8 +1,5 @@
 #ifndef SCENE_H
 # define SCENE_H
-
-# include "minirt.h"
-
 typedef struct s_vec3
 {
 	double	x;
@@ -11,6 +8,7 @@ typedef struct s_vec3
 }	t_vec3;
 
 typedef struct s_vec3	t_point3;
+typedef struct s_vec3	t_color;
 
 typedef struct s_amb
 {
@@ -32,7 +30,6 @@ typedef struct s_camera
 	t_vec3		up;
 	t_vec3		right;
 	double		fov;
-	double		scale;
 }	t_camera;
 
 typedef struct s_ray
@@ -82,6 +79,5 @@ typedef struct s_scene
 
 t_hit	intersect_sphere(t_ray *ray, t_sphere *sphere);
 t_scene	init_scene(void);
-void	render(t_framebuf *framebuf, t_scene scene);
 
 #endif
