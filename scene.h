@@ -19,7 +19,7 @@ typedef struct s_amb
 typedef struct s_light
 {
 	t_point3	origin;
-	t_vec3		direction;
+	t_color		color;
 	double		brightness;
 }	t_light;
 

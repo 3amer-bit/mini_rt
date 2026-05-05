@@ -37,12 +37,17 @@ t_vec3	add(t_vec3 a, t_vec3 b)
 	return ((t_vec3){a.x + b.x, a.y + b.y, a.z + b.z});
 }
 
+double	vec_len(t_vec3 v)
+{
+	return (sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z)));
+}
+
 t_vec3	normalize(t_vec3 v)
 {
 	double	length;
 	double	inv_length;
 
-	length = sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z));
+	length = vec_len(v);
 	if (length > EPSILON)
 	{
 		inv_length = 1 / length;
