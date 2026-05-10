@@ -1,5 +1,6 @@
 #ifndef SCENE_H
 # define SCENE_H
+
 typedef struct s_vec3
 {
 	double	x;
@@ -41,8 +42,9 @@ typedef struct s_ray
 typedef struct s_material
 {
 	t_color	albedo;
-	double	reflectivity;
-	double	roughness;
+	double	diffuse;
+	double	specular;
+	double	shininess;
 }	t_material;
 
 typedef struct s_sphere
@@ -57,6 +59,7 @@ typedef struct s_hit
 	double		t;
 	t_point3	point;
 	t_vec3		normal;
+	t_vec3		view_dir;
 	t_material	*mat;
 }	t_hit;
 
@@ -70,14 +73,16 @@ typedef struct s_scene
 {
 	t_amb		ambient_light;
 	t_camera	camera;
-	// TODO ADD LIGHTS
-	t_light		light;
-	// t_sphere	objects[100]
+	t_light		lights[100];
 	t_sphere	objects[100];
 	int			obj_count;
+	int			light_count;
 }	t_scene;
 
 t_hit	intersect_sphere(t_ray *ray, t_sphere *sphere);
 t_scene	init_scene(void);
+int		in_shadow(t_hit hit, t_scene scene, t_light light);
+t_vec3	reflect(t_vec3 normal, t_vec3 light_dir);
+t_color	shade(t_hit hit, t_scene scene);
 
 #endif

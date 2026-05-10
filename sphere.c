@@ -38,6 +38,9 @@ t_hit	intersect_sphere(t_ray *ray, t_sphere *sphere)
 		return (hit);
 	hit.point = add(ray->origin, scale(ray->direction, hit.t));
 	hit.normal = scale(sub(hit.point, sphere->origin), 1.0 / sphere->radius);
+	if (dot(ray->direction, hit.normal) > 0)
+		hit.normal = scale(hit.normal, -1.0);
+	hit.view_dir = scale(ray->direction, -1.0);
 	hit.mat = &sphere->mat;
 	return (hit);
 }
