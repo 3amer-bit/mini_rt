@@ -9,7 +9,7 @@ static int	intersects_anything(t_ray ray, t_scene scene, double max_dist)
 	i = 0;
 	while (i < scene.obj_count)
 	{
-		hit = intersect_sphere(&ray, &scene.objects[i]);
+		hit = scene.objects[i].intersect(&ray, scene.objects[i].data);
 		if (hit.t > EPSILON && hit.t < max_dist)
 			return (1);
 		i++;

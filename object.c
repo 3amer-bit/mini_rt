@@ -29,10 +29,12 @@ static double	solve_sphere_quadratic(t_ray *ray, t_sphere *sphere)
 	return (t);
 }
 
-t_hit	intersect_sphere(t_ray *ray, t_sphere *sphere)
+t_hit	intersect_sphere(t_ray *ray, void *obj)
 {
-	t_hit	hit;
+	t_hit		hit;
+	t_sphere	*sphere;
 
+	sphere = (t_sphere *) obj;
 	hit.t = solve_sphere_quadratic(ray, sphere);
 	if (hit.t < 0)
 		return (hit);
@@ -42,5 +44,30 @@ t_hit	intersect_sphere(t_ray *ray, t_sphere *sphere)
 		hit.normal = scale(hit.normal, -1.0);
 	hit.view_dir = scale(ray->direction, -1.0);
 	hit.mat = &sphere->mat;
+	return (hit);
+}
+
+t_hit	intersect_plane(t_ray *ray, void *obj)
+{
+	t_hit	hit;
+	double	denom;
+	double	numer;
+	t_plane	*plane;
+
+	plane = (t_plane *) obj;
+	hit.t = -1.0;
+	denom = dot(ray->direction, plane->normal);
+	if (fabs(denom) < EPSILON)
+		return (hit);
+	numer = dot(sub(plane->point, ray->origin), plane->normal);
+	hit.t = numer / denom;
+	if (hit.t < 0.0)
+		return (hit);
+	hit.point = add(ray->origin, scale(ray->direction, hit.t));
+	hit.normal = plane->normal;
+	if (dot(ray->direction, hit.normal) > 0)
+		hit.normal = scale(hit.normal, -1.0);
+	hit.view_dir = scale(ray->direction, -1.0);
+	hit.mat = &plane->mat;
 	return (hit);
 }

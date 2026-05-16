@@ -1,6 +1,6 @@
 CC 				= gcc-13 # TODO CHANGE TO CC
 CFLAGS			= -Wall -Werror -Wextra
-SRC				= main.c hook.c pixel.c render.c vector.c scene.c sphere.c light.c light_utils.c utils.c
+SRC				= main.c hook.c pixel.c render.c vector.c scene.c object.c light.c light_utils.c utils.c
 DEPS_FOLDER		= deps
 BUILD_FOLDER	= build
 OBJS 			= $(SRC:%.c=$(BUILD_FOLDER)/%.o)

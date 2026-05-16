@@ -27,7 +27,7 @@ static t_hit	trace_ray(t_ray ray, t_scene scene)
 	i = 0;
 	while (i < scene.obj_count)
 	{
-		hit = intersect_sphere(&ray, &scene.objects[i]);
+		hit = scene.objects[i].intersect(&ray, scene.objects[i].data);
 		if (hit.t <= EPSILON)
 		{
 			i++;

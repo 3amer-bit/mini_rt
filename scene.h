@@ -54,6 +54,13 @@ typedef struct s_sphere
 	t_material	mat;
 }	t_sphere;
 
+typedef struct s_plane
+{
+	t_point3	point;
+	t_vec3		normal;
+	t_material	mat;
+}	t_plane;
+
 typedef struct s_hit
 {
 	double		t;
@@ -74,12 +81,13 @@ typedef struct s_scene
 	t_amb		ambient_light;
 	t_camera	camera;
 	t_light		lights[100];
-	t_sphere	objects[100];
+	t_object	objects[100];
 	int			obj_count;
 	int			light_count;
 }	t_scene;
 
-t_hit	intersect_sphere(t_ray *ray, t_sphere *sphere);
+t_hit	intersect_sphere(t_ray *ray, void *obj);
+t_hit	intersect_plane(t_ray *ray, void *obj);
 t_scene	init_scene(void);
 int		in_shadow(t_hit hit, t_scene scene, t_light light);
 t_vec3	reflect(t_vec3 normal, t_vec3 light_dir);
