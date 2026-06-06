@@ -84,10 +84,24 @@ typedef struct s_scene
 	t_object	objects[100];
 	int			obj_count;
 	int			light_count;
+	int			has_ambient;
+	int			has_camera;
 }	t_scene;
+
+//cylinder
+
+typedef struct s_cylinder
+{
+	t_point3	origin;
+	t_vec3		normal;
+	double		radius;
+	double		height;
+	t_material	mat;
+}	t_cylinder;
 
 t_hit	intersect_sphere(t_ray *ray, void *obj);
 t_hit	intersect_plane(t_ray *ray, void *obj);
+t_hit	intersect_cylinder(t_ray *ray, void *obj);
 t_scene	init_scene(void);
 int		in_shadow(t_hit hit, t_scene scene, t_light light);
 t_vec3	reflect(t_vec3 normal, t_vec3 light_dir);

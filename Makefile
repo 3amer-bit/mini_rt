@@ -1,7 +1,10 @@
 CC 				= gcc-13 # TODO CHANGE TO CC
 CFLAGS			= -Wall -Werror -Wextra
-SRC = main.c hook.c pixel.c render.c vector.c scene.c object.c light.c light_utils.c utils.c \
-		get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
+SRC = main.c hook.c pixel.c render.c vector.c scene.c object.c \
+		light.c light_utils.c utils.c \
+		get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
+		parse.c parse_utils.c parse_scene.c parse_objects.c
+
 DEPS_FOLDER		= deps
 BUILD_FOLDER	= build
 OBJS 			= $(SRC:%.c=$(BUILD_FOLDER)/%.o)
@@ -14,13 +17,14 @@ NAME 			= minirt
 all bonus: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) -O3 $^ $(LD) -o $@
+	$(CC) $(CFLAGS) -O3 $(OBJS) $(LD) -o $@
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
 $(OBJS) :$(BUILD_FOLDER)/%.o:%.c | $(BUILD_FOLDER) $(DEPS_FOLDER)
 	mkdir -p $(dir $@)
+	mkdir -p $(DEPS_FOLDER)/$(dir $*)
 	$(CC) -c -MMD -MF $(DEPS_FOLDER)/$*.d $(CFLAGS) -O3 $< -o $@
 
 $(BUILD_FOLDER):

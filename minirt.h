@@ -49,4 +49,18 @@ void	ft_mlx_put_pixel(t_framebuf *framebuf, t_pixel *pixel);
 double	degrees_to_radians(double degrees);
 void	render(t_framebuf *framebuf, t_scene scene);
 
+// parsing
+
+double	ft_atof(const char *s);
+t_vec3	parse_vec3(char *s);
+t_color	parse_color(char *s);
+void	parse_ambient(t_scene *scene, char **parts);
+void	parse_camera(t_scene *scene, char **parts);
+void	parse_light(t_scene *scene, char **parts);
+void	parse_sphere(t_scene *scene, char **parts);
+void	parse_plane(t_scene *scene, char **parts);
+void	parse_cylinder(t_scene *scene, char **parts);
+t_scene	parse_scene(char *filename);
+void	ft_error(char *msg);
+
 #endif
