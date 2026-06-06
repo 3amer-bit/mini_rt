@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 13:35:59 by aalemami          #+#    #+#             */
-/*   Updated: 2026/06/06 12:59:28 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/06/06 21:53:33 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 #include "libft/inc/libft.h"
 #include "get_next_line/get_next_line.h"
 #include "minirt.h"
+
+static void	free_scene(t_scene *scene)
+{
+	int	i;
+
+	i = 0;
+	while (i < scene->obj_count)
+		free(scene->objects[i++].data);
+}
 
 static void	dispatch(t_scene *scene, char **parts)
 {
@@ -49,6 +58,7 @@ static void	parse_line(t_scene *scene, char *line)
 
 	if (line[0] == '\n' || line[0] == '\0')
 		return ;
+	line[ft_strlen(line) - 1] = '\0';
 	parts = ft_split(line, ' ');
 	if (!parts || !parts[0])
 		return ;
@@ -75,8 +85,14 @@ t_scene	parse_scene(char *filename)
 	}
 	close(fd);
 	if (!scene.has_ambient)
+	{
+		free_scene(&scene);
 		ft_error("Missing ambient light");
+	}
 	if (!scene.has_camera)
+	{
+		free_scene(&scene);
 		ft_error("Missing camera");
+	}
 	return (scene);
 }

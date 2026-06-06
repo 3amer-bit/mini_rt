@@ -89,5 +89,6 @@ int	main(int argc, char **argv)
 	mlx_put_image_to_window(
 		win_ctx.mlx_ptr, win_ctx.win_ptr, win_ctx.framebuf->img_ptr, 0, 0);
 	mlx_loop(win_ctx.mlx_ptr);
+	free_scene(&win_ctx.scene);
 	return (EXIT_SUCCESS);
 }
