@@ -32,39 +32,25 @@ int	handle_keypress(int keysym, t_window *data)
 {
 	if (keysym == XK_Escape)
 	{
+		free_scene(&data->scene);
 		mlx_destroy(data);
 		exit(EXIT_SUCCESS);
 	}
+	data->redraw = 1;
 	if (keysym == XK_w)
-	{
-		data->redraw = 1;
 		data->scene.camera.origin = add(data->scene.camera.origin, scale(data->scene.camera.forward, 0.5));
-	}
-	if (keysym == XK_s)
-	{
-		data->redraw = 1;
+	else if (keysym == XK_s)
 		data->scene.camera.origin = sub(data->scene.camera.origin, scale(data->scene.camera.forward, 0.5));
-	}
-	if (keysym == XK_d)
-	{
-		data->redraw = 1;
+	else if (keysym == XK_d)
 		data->scene.camera.origin = add(data->scene.camera.origin, scale(data->scene.camera.right, 0.5));
-	}
-	if (keysym == XK_a)
-	{
-		data->redraw = 1;
+	else if (keysym == XK_a)
 		data->scene.camera.origin = sub(data->scene.camera.origin, scale(data->scene.camera.right, 0.5));
-	}
-	if (keysym == XK_q)
-	{
-		data->redraw = 1;
+	else if (keysym == XK_q)
 		data->scene.camera.origin = add(data->scene.camera.origin, scale(data->scene.camera.up, 0.5));
-	}
-	if (keysym == XK_e)
-	{
-		data->redraw = 1;
+	else if (keysym == XK_e)
 		data->scene.camera.origin = sub(data->scene.camera.origin, scale(data->scene.camera.up, 0.5));
-	}
+	else
+		data->redraw = 0;
 	return (1);
 }
 
@@ -87,6 +73,7 @@ int	loop_hook(t_window *data)
 
 int	handle_destroy_structure_notify(t_window *data)
 {
+	free_scene(&data->scene);
 	mlx_destroy(data);
 	exit(EXIT_SUCCESS);
 }

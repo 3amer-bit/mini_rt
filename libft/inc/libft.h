@@ -19,7 +19,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
-#include <limits.h>
+# include <limits.h>
 # include "ft_printf.h"
 
 int		ft_isalpha(int c);

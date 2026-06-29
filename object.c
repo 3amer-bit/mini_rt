@@ -71,13 +71,3 @@ t_hit	intersect_plane(t_ray *ray, void *obj)
 	hit.mat = &plane->mat;
 	return (hit);
 }
-
-t_hit	intersect_cylinder(t_ray *ray, void *obj)
-{
-	t_hit	hit;
-
-	(void)ray;
-	(void)obj;
-	hit.t = -1.0;
-	return (hit);
-}

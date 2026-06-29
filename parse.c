@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/05 13:35:59 by aalemami          #+#    #+#             */
-/*   Updated: 2026/06/06 21:53:33 by aalemami         ###   ########.fr       */
+/*   Created: 2026/06/20 20:57:22 by aalemami          #+#    #+#             */
+/*   Updated: 2026/06/29 11:57:15 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "get_next_line/get_next_line.h"
 #include "minirt.h"
 
-static void	free_scene(t_scene *scene)
+void	free_scene(t_scene *scene)
 {
 	int	i;
 
@@ -39,13 +39,15 @@ static void	dispatch(t_scene *scene, char **parts)
 	else if (ft_strncmp(parts[0], "cy", 3) == 0)
 		parse_cylinder(scene, parts);
 	else
-		ft_error("Unknown identifier");
+		ft_error(scene, "Unknown identifier");
 }
 
-static void	free_parts(char **parts)
+void	free_parts(char **parts)
 {
 	int	i;
 
+	if (!parts)
+		return ;
 	i = 0;
 	while (parts[i])
 		free(parts[i++]);
@@ -55,14 +57,22 @@ static void	free_parts(char **parts)
 static void	parse_line(t_scene *scene, char *line)
 {
 	char	**parts;
+	int		len;
 
 	if (line[0] == '\n' || line[0] == '\0')
 		return ;
-	line[ft_strlen(line) - 1] = '\0';
+	len = ft_strlen(line);
+	if (line[len - 1] == '\n')
+		line[len - 1] = '\0';
 	parts = ft_split(line, ' ');
 	if (!parts || !parts[0])
+	{
+		free_parts(parts);
 		return ;
+	}
+	scene->cur_parts = parts;
 	dispatch(scene, parts);
+	scene->cur_parts = NULL;
 	free_parts(parts);
 }
 
@@ -75,24 +85,20 @@ t_scene	parse_scene(char *filename)
 	scene = (t_scene){0};
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		ft_error("Could not open file");
+		ft_error(NULL, "Could not open file");
 	line = get_next_line(fd);
 	while (line)
 	{
+		scene.cur_line = line;
 		parse_line(&scene, line);
+		scene.cur_line = NULL;
 		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
 	if (!scene.has_ambient)
-	{
-		free_scene(&scene);
-		ft_error("Missing ambient light");
-	}
+		ft_error(&scene, "Missing ambient light");
 	if (!scene.has_camera)
-	{
-		free_scene(&scene);
-		ft_error("Missing camera");
-	}
+		ft_error(&scene, "Missing camera");
 	return (scene);
 }

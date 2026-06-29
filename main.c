@@ -60,7 +60,6 @@ static int	init_window(t_window *win, char **argv)
 	}
 	win->redraw = 0;
 	win->scene = parse_scene(argv[1]);
-	
 	return (1);
 }
 
@@ -69,10 +68,10 @@ static void	check_args(int argc, char **argv)
 	int	len;
 
 	if (argc != 2)
-		ft_error("Usage: ./minirt <scene.rt>");
+		ft_error(NULL, "Usage: ./minirt <scene.rt>");
 	len = ft_strlen(argv[1]);
 	if (len < 3 || ft_strncmp(argv[1] + len - 3, ".rt", 3) != 0)
-		ft_error("File must have .rt extension");
+		ft_error(NULL, "File must have .rt extension");
 }
 
 int	main(int argc, char **argv)

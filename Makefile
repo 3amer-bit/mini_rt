@@ -1,9 +1,11 @@
-CC 				= gcc-13 # TODO CHANGE TO CC
+CC 				= cc
 CFLAGS			= -Wall -Werror -Wextra
-SRC = main.c hook.c pixel.c render.c vector.c scene.c object.c \
-		light.c light_utils.c utils.c \
-		get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
-		parse.c parse_utils.c parse_scene.c parse_objects.c
+SRC =			main.c hook.c pixel.c render.c vector.c scene.c object.c \
+				light.c light_utils.c utils.c \
+				get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
+				parse.c parse_utils.c parse_scene.c parse_objects.c \
+				parse_validate.c parse_checks.c parse_fields.c \
+				cylinder.c cylinder_utils.c
 
 DEPS_FOLDER		= deps
 BUILD_FOLDER	= build

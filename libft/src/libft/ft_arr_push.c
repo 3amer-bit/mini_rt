@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/02 22:05:37 by aalemami          #+#    #+#             */
-/*   Updated: 2026/05/02 22:05:49 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/06/20 21:08:40 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static int	get_size(char **arr)
 		i++;
 	return (i);
 }
+
 static char	**strdup_2d(char **new_arr, char **arr, char *new_str)
 {
 	int	i;
@@ -59,7 +60,7 @@ char	**ft_arr_push(char **arr, char *str)
 		ft_free_split(arr);
 		return (NULL);
 	}
-	new_arr = malloc(sizeof(char*) * (get_size(arr) + 2));
+	new_arr = malloc(sizeof(char *) * (get_size(arr) + 2));
 	if (!new_arr)
 	{
 		free(new_str);
