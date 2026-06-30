@@ -1,7 +1,7 @@
 CC 				= cc
 CFLAGS			= -Wall -Werror -Wextra
-SRC =			main.c hook.c pixel.c render.c vector.c scene.c object.c \
-				light.c light_utils.c utils.c \
+SRC =			main.c hook.c hook_utils.c pixel.c render.c vector.c  \
+				vector_utils.c object.c light.c light_utils.c utils.c \
 				get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
 				parse.c parse_utils.c parse_scene.c parse_objects.c \
 				parse_validate.c parse_checks.c parse_fields.c \

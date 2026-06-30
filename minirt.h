@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 21:09:32 by aalemami          #+#    #+#             */
-/*   Updated: 2026/06/29 11:46:31 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/06/30 13:47:44 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_window
 int		handle_keypress(int keysym, t_window *data);
 int		handle_destroy_structure_notify(t_window *data);
 int		loop_hook(t_window *data);
+int		move_camera(int keysym, t_camera *cam);
 void	mlx_destroy(t_window *win_ctx);
 void	ft_mlx_put_pixel(t_framebuf *framebuf, t_pixel *pixel);
 double	degrees_to_radians(double degrees);

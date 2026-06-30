@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/30 02:16:18 by aalemami          #+#    #+#             */
+/*   Updated: 2026/06/30 02:16:47 by aalemami         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <stdlib.h>
@@ -33,7 +45,6 @@ static int	setup_hooks(t_window *window)
 		handle_destroy_structure_notify,
 		window
 		);
-	// mlx_mouse_hook(win_ctx->win_ptr, handle_mouse, window);
 	mlx_loop_hook(window->mlx_ptr, loop_hook, window);
 	return (1);
 }

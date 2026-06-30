@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hook.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/30 13:47:58 by aalemami          #+#    #+#             */
+/*   Updated: 2026/06/30 13:47:59 by aalemami         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <X11/X.h>
 #include <X11/Xutil.h>
@@ -36,21 +48,7 @@ int	handle_keypress(int keysym, t_window *data)
 		mlx_destroy(data);
 		exit(EXIT_SUCCESS);
 	}
-	data->redraw = 1;
-	if (keysym == XK_w)
-		data->scene.camera.origin = add(data->scene.camera.origin, scale(data->scene.camera.forward, 0.5));
-	else if (keysym == XK_s)
-		data->scene.camera.origin = sub(data->scene.camera.origin, scale(data->scene.camera.forward, 0.5));
-	else if (keysym == XK_d)
-		data->scene.camera.origin = add(data->scene.camera.origin, scale(data->scene.camera.right, 0.5));
-	else if (keysym == XK_a)
-		data->scene.camera.origin = sub(data->scene.camera.origin, scale(data->scene.camera.right, 0.5));
-	else if (keysym == XK_q)
-		data->scene.camera.origin = add(data->scene.camera.origin, scale(data->scene.camera.up, 0.5));
-	else if (keysym == XK_e)
-		data->scene.camera.origin = sub(data->scene.camera.origin, scale(data->scene.camera.up, 0.5));
-	else
-		data->redraw = 0;
+	data->redraw = move_camera(keysym, &data->scene.camera);
 	return (1);
 }
 

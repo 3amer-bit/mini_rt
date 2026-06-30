@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 20:55:11 by aalemami          #+#    #+#             */
-/*   Updated: 2026/06/20 20:55:15 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/06/30 13:50:12 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "vector.h"
 #include "scene.h"
 #include "minirt.h"
- 
+
 static double	cy_body_t(t_ray *ray, t_cylinder *cy)
 {
 	t_vec3	rd;
@@ -22,8 +22,9 @@ static double	cy_body_t(t_ray *ray, t_cylinder *cy)
 	double	coeff[3];
 	double	disc;
 	double	t;
- 
-	rd = sub(ray->direction, scale(cy->normal, dot(ray->direction, cy->normal)));
+
+	rd = sub(ray->direction,
+			scale(cy->normal, dot(ray->direction, cy->normal)));
 	od = sub(sub(ray->origin, cy->origin), scale(cy->normal,
 				dot(sub(ray->origin, cy->origin), cy->normal)));
 	coeff[0] = dot(rd, rd);
@@ -39,13 +40,14 @@ static double	cy_body_t(t_ray *ray, t_cylinder *cy)
 		return (-1.0);
 	return (t);
 }
- 
-static double	cy_cap_t(t_ray *ray, t_point3 center, t_vec3 axis, double radius)
+
+static double	cy_cap_t(t_ray *ray, t_point3 center,
+						t_vec3 axis, double radius)
 {
 	double		t;
 	double		denom;
 	t_point3	point;
- 
+
 	denom = dot(ray->direction, axis);
 	if (fabs(denom) < EPSILON)
 		return (-1.0);
@@ -57,11 +59,11 @@ static double	cy_cap_t(t_ray *ray, t_point3 center, t_vec3 axis, double radius)
 		return (-1.0);
 	return (t);
 }
- 
+
 static t_hit	cy_fill_hit(t_ray *ray, t_cylinder *cy, double t, t_vec3 normal)
 {
 	t_hit	hit;
- 
+
 	hit.t = t;
 	hit.point = add(ray->origin, scale(ray->direction, t));
 	hit.normal = normal;
@@ -71,11 +73,11 @@ static t_hit	cy_fill_hit(t_ray *ray, t_cylinder *cy, double t, t_vec3 normal)
 	hit.mat = &cy->mat;
 	return (hit);
 }
- 
+
 static int	cy_is_best(double *t, int idx)
 {
 	int	i;
- 
+
 	if (t[idx] <= EPSILON)
 		return (0);
 	i = 0;
@@ -87,13 +89,13 @@ static int	cy_is_best(double *t, int idx)
 	}
 	return (1);
 }
- 
+
 t_hit	intersect_cylinder(t_ray *ray, void *obj)
 {
 	t_cylinder	*cy;
 	t_hit		miss;
 	double		t[3];
- 
+
 	cy = (t_cylinder *) obj;
 	t[0] = cy_body_t(ray, cy);
 	t[1] = cy_cap_t(ray, sub(cy->origin, scale(cy->normal, cy->height / 2.0)),

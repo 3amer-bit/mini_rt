@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector.c                                           :+:      :+:    :+:   */
+/*   vector_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/30 02:10:47 by aalemami          #+#    #+#             */
-/*   Updated: 2026/06/30 02:11:23 by aalemami         ###   ########.fr       */
+/*   Created: 2026/06/30 02:11:00 by aalemami          #+#    #+#             */
+/*   Updated: 2026/06/30 02:16:09 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,26 @@
 #include "minirt.h"
 #include "vector.h"
 
-t_vec3	sub(t_vec3 a, t_vec3 b)
+t_vec3	scale(t_vec3 vec, double scaler)
 {
-	return ((t_vec3){a.x - b.x, a.y - b.y, a.z - b.z});
+	return ((t_vec3){
+		vec.x * scaler,
+		vec.y * scaler,
+		vec.z * scaler
+	});
 }
 
-t_vec3	add(t_vec3 a, t_vec3 b)
+double	dot(t_vec3 a, t_vec3 b)
 {
-	return ((t_vec3){a.x + b.x, a.y + b.y, a.z + b.z});
+	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }
 
-double	vec_len(t_vec3 v)
+t_vec3	cross(t_vec3 a, t_vec3 b)
 {
-	return (sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z)));
-}
+	t_vec3	result;
 
-t_vec3	normalize(t_vec3 v)
-{
-	double	length;
-	double	inv_length;
-
-	length = vec_len(v);
-	if (length > EPSILON)
-	{
-		inv_length = 1 / length;
-		v.x *= inv_length;
-		v.y *= inv_length;
-		v.z *= inv_length;
-	}
-	return (v);
+	result.x = a.y * b.z - a.z * b.y;
+	result.y = a.z * b.x - a.x * b.z;
+	result.z = a.x * b.y - a.y * b.x;
+	return (result);
 }
