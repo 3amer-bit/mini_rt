@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 21:09:32 by aalemami          #+#    #+#             */
-/*   Updated: 2026/06/30 13:47:44 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/07/10 19:24:52 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	free_parts(char **parts);
 int		valid_num_str(const char *s, int allow_dot);
 void	check_argc(t_scene *scene, char **parts, int expected);
 void	check_number(t_scene *scene, const char *s);
-void	check_int(t_scene *scene, const char *s);
 void	check_range(t_scene *scene, double val, double min, double max);
 void	check_positive(t_scene *scene, double val);
 void	check_nonzero_vec(t_scene *scene, t_vec3 v);

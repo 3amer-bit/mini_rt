@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 21:09:48 by aalemami          #+#    #+#             */
-/*   Updated: 2026/06/20 21:09:50 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/07/10 19:28:33 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	ft_mlx_put_pixel(t_framebuf *framebuf, t_pixel *pixel)
 	int		bytes_per_pixel;
 	char	*pixel_to_color;
 
-	if (pixel->x < 0 || pixel->x > framebuf->width)
+	if (pixel->x < 0 || pixel->x >= framebuf->width)
 		return ;
-	if (pixel->y < 0 || pixel->y > framebuf->height)
+	if (pixel->y < 0 || pixel->y >= framebuf->height)
 		return ;
 	bytes_per_pixel = framebuf->bits_per_pixel / 8;
 	pixel_to_color = framebuf->addr

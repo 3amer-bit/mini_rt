@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 02:16:18 by aalemami          #+#    #+#             */
-/*   Updated: 2026/06/30 02:16:47 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/07/10 19:24:29 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static int	setup_hooks(t_window *window)
 
 static int	init_window(t_window *win, char **argv)
 {
+	win->scene = parse_scene(argv[1]);
 	win->mlx_ptr = mlx_init();
 	if (!win->mlx_ptr)
 		return (0);
@@ -70,7 +71,6 @@ static int	init_window(t_window *win, char **argv)
 		return (0);
 	}
 	win->redraw = 0;
-	win->scene = parse_scene(argv[1]);
 	return (1);
 }
 

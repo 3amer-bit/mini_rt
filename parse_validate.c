@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 20:55:54 by aalemami          #+#    #+#             */
-/*   Updated: 2026/06/29 00:00:00 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/07/10 19:36:26 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,4 @@ void	check_number(t_scene *scene, const char *s)
 {
 	if (!s || !valid_num_str(s, 1))
 		ft_error(scene, "Invalid number format");
-}
-
-void	check_int(t_scene *scene, const char *s)
-{
-	if (!s || !valid_num_str(s, 0))
-		ft_error(scene, "Invalid integer format");
 }
