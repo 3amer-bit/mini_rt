@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 21:09:11 by aalemami          #+#    #+#             */
-/*   Updated: 2026/07/10 19:27:57 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/07/10 19:53:52 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ void	render(t_framebuf *fb, t_scene scene)
 		while (pixel.x < fb->width)
 		{
 			vp.y = (1 - 2 * ((double) pixel.y / fb->height)) * fov_scale;
-			vp.x = (2 * ((double) pixel.x / fb->width) - 1) * aspect * fov_scale;
+			vp.x
+				= (2 * ((double) pixel.x / fb->width) - 1) * aspect * fov_scale;
 			pixel.color = ray_gen(get_ray(scene.camera, vp), scene);
 			ft_mlx_put_pixel(fb, &pixel);
 			pixel.x++;
