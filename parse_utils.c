@@ -6,12 +6,15 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 20:57:50 by aalemami          #+#    #+#             */
-/*   Updated: 2026/06/29 00:00:00 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/07/13 13:50:02 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "libft/inc/libft.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 static double	parse_fraction(const char *s)
 {

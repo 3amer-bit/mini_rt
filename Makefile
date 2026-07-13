@@ -12,16 +12,17 @@ BUILD_FOLDER	= build
 OBJS 			= $(SRC:%.c=$(BUILD_FOLDER)/%.o)
 DEPS 			= $(SRC:%.c=$(DEPS_FOLDER)/%.d)
 LIBFT_DIR		= libft
+LIBFT_LIB = libft/libft.a
 LIBFT			= ft
 LD				= -Lminilibx-linux -lmlx -lXext -lX11 -lm -L$(LIBFT_DIR) -l$(LIBFT)
 NAME 			= minirt
 
 all bonus: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(LIBFT_LIB) $(OBJS)
 	$(CC) $(CFLAGS) -O3 $(OBJS) $(LD) -o $@
 
-$(LIBFT):
+$(LIBFT_LIB):
 	$(MAKE) -C $(LIBFT_DIR)
 
 $(OBJS) :$(BUILD_FOLDER)/%.o:%.c | $(BUILD_FOLDER) $(DEPS_FOLDER)

@@ -6,7 +6,7 @@
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 20:57:22 by aalemami          #+#    #+#             */
-/*   Updated: 2026/06/29 11:57:15 by aalemami         ###   ########.fr       */
+/*   Updated: 2026/07/13 13:50:10 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 #include "libft/inc/libft.h"
 #include "get_next_line/get_next_line.h"
 #include "minirt.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 void	free_scene(t_scene *scene)
 {
