@@ -39,7 +39,7 @@ int	in_shadow(t_hit hit, t_scene scene, t_light light)
 	dist_to_light = vec_len(light_vec);
 	shadow_ray.origin = hit.point;
 	shadow_ray.direction = normalize(light_vec);
-	return (intersects_anything(shadow_ray, scene, dist_to_light));
+	return (intersects_anything(shadow_ray, scene, dist_to_light + EPSILON));
 }
 
 t_vec3	reflect(t_vec3 normal, t_vec3 light_dir)
