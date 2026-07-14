@@ -14,7 +14,6 @@
 #include <X11/X.h>
 #include <X11/Xutil.h>
 #include "./minilibx-linux/mlx.h"
-#include "vector.h"
 #include "minirt.h"
 
 void	mlx_destroy(t_window *win_ctx)

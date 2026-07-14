@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <math.h>
-#include "libft/inc/libft.h"
 #include "minirt.h"
 #include "vector.h"
 

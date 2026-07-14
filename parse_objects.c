@@ -11,9 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "libft/inc/libft.h"
 #include "minirt.h"
-#include "vector.h"
 
 void	parse_sphere(t_scene *scene, char **parts)
 {

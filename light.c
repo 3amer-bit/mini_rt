@@ -12,7 +12,6 @@
 
 #include <math.h>
 #include "vector.h"
-#include "minirt.h"
 
 static t_color	ambient_color(t_scene scene)
 {

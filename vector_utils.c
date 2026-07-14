@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
 #include "scene.h"
-#include "minirt.h"
 #include "vector.h"
 
 t_vec3	scale(t_vec3 vec, double scaler)

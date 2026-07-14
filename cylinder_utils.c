@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
 #include "vector.h"
 #include "scene.h"
 #include "minirt.h"
