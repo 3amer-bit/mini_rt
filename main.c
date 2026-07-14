@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/30 02:16:18 by aalemami          #+#    #+#             */
+/*   Updated: 2026/07/10 19:24:29 by aalemami         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <stdlib.h>
 #include "./minilibx-linux/mlx.h"
 #include "minirt.h"
+#include "libft/inc/libft.h"
 
 static int	setup_img(t_window *win_ctx)
 {
@@ -32,13 +45,13 @@ static int	setup_hooks(t_window *window)
 		handle_destroy_structure_notify,
 		window
 		);
-	// mlx_mouse_hook(win_ctx->win_ptr, handle_mouse, window);
 	mlx_loop_hook(window->mlx_ptr, loop_hook, window);
 	return (1);
 }
 
-static int	init_window(t_window *win)
+static int	init_window(t_window *win, char **argv)
 {
+	win->scene = parse_scene(argv[1]);
 	win->mlx_ptr = mlx_init();
 	if (!win->mlx_ptr)
 		return (0);
@@ -58,22 +71,34 @@ static int	init_window(t_window *win)
 		return (0);
 	}
 	win->redraw = 0;
-	win->scene = init_scene();
 	return (1);
 }
 
-int	main(void)
+static void	check_args(int argc, char **argv)
+{
+	int	len;
+
+	if (argc != 2)
+		ft_error(NULL, "Usage: ./minirt <scene.rt>");
+	len = ft_strlen(argv[1]);
+	if (len < 3 || ft_strncmp(argv[1] + len - 3, ".rt", 3) != 0)
+		ft_error(NULL, "File must have .rt extension");
+}
+
+int	main(int argc, char **argv)
 {
 	t_window	win_ctx;
 	t_framebuf	framebuf;
 
+	check_args(argc, argv);
 	win_ctx.framebuf = &framebuf;
-	if (!init_window(&win_ctx))
+	if (!init_window(&win_ctx, argv))
 		return (EXIT_FAILURE);
 	setup_hooks(&win_ctx);
 	render(&framebuf, win_ctx.scene);
 	mlx_put_image_to_window(
 		win_ctx.mlx_ptr, win_ctx.win_ptr, win_ctx.framebuf->img_ptr, 0, 0);
 	mlx_loop(win_ctx.mlx_ptr);
+	free_scene(&win_ctx.scene);
 	return (EXIT_SUCCESS);
 }

@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_free_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/30 13:48:03 by aalemami          #+#    #+#             */
-/*   Updated: 2026/06/30 13:48:04 by aalemami         ###   ########.fr       */
+/*   Created: 2026/03/30 18:04:52 by aalemami          #+#    #+#             */
+/*   Updated: 2026/04/22 14:56:07 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "libft.h"
 
-double	degrees_to_radians(double degrees)
+void	ft_free_split(char **str)
 {
-	return (degrees * PI / 180.0);
+	char	**tmp;
+
+	if (!str)
+		return ;
+	tmp = str;
+	while (*str)
+		free(*str++);
+	free(tmp);
 }

@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_str_isdigit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/30 13:48:03 by aalemami          #+#    #+#             */
-/*   Updated: 2026/06/30 13:48:04 by aalemami         ###   ########.fr       */
+/*   Created: 2026/04/28 23:38:45 by aalemami          #+#    #+#             */
+/*   Updated: 2026/04/28 23:42:15 by aalemami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "libft.h"
 
-double	degrees_to_radians(double degrees)
+int	ft_str_isdigit(char *str)
 {
-	return (degrees * PI / 180.0);
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }

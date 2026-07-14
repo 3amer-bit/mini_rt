@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   scene.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aalemami <aalemami@student.42amman.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/30 02:15:19 by aalemami          #+#    #+#             */
+/*   Updated: 2026/06/30 02:15:25 by aalemami         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SCENE_H
 # define SCENE_H
 
@@ -61,6 +73,15 @@ typedef struct s_plane
 	t_material	mat;
 }	t_plane;
 
+typedef struct s_cylinder
+{
+	t_point3	origin;
+	t_vec3		normal;
+	double		radius;
+	double		height;
+	t_material	mat;
+}	t_cylinder;
+
 typedef struct s_hit
 {
 	double		t;
@@ -84,11 +105,15 @@ typedef struct s_scene
 	t_object	objects[100];
 	int			obj_count;
 	int			light_count;
+	int			has_ambient;
+	int			has_camera;
+	char		*cur_line;
+	char		**cur_parts;
 }	t_scene;
 
 t_hit	intersect_sphere(t_ray *ray, void *obj);
 t_hit	intersect_plane(t_ray *ray, void *obj);
-t_scene	init_scene(void);
+t_hit	intersect_cylinder(t_ray *ray, void *obj);
 int		in_shadow(t_hit hit, t_scene scene, t_light light);
 t_vec3	reflect(t_vec3 normal, t_vec3 light_dir);
 t_color	shade(t_hit hit, t_scene scene);
